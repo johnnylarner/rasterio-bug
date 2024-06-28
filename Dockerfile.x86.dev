@@ -1,0 +1,17 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.12.3-slim-bookworm
+
+# Set the working directory in the container
+WORKDIR /app
+
+RUN echo 'deb http://deb.debian.org/debian trixie main' >> /etc/apt/sources.list
+RUN apt update \
+    && apt install -y libclang-dev clang cmake build-essential curl \
+       libgdal-dev libproj-dev/trixie \
+       gdal-bin
+
+RUN pip install -U pdm
+ENV PDM_CHECK_UPDATE=false
+COPY pyproject.toml pdm.lock /app
+RUN pdm install
+

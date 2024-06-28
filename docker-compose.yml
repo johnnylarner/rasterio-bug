@@ -1,0 +1,17 @@
+services:
+  test:
+    build:
+      dockerfile: Dockerfile.x86.dev
+      context: .
+    command: pdm run src/rasterio_bug/main.py
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+  info:
+    build:
+      dockerfile: Dockerfile.x86.dev
+      context: .
+    command: pdm run rio --show-versions 
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
